@@ -1,16 +1,19 @@
 import { Route, Routes} from "react-router-dom"
 import Home from "./pages/Home"
-import Signup from "./pages/Signup"
+import Login from "./pages/Login"
 import './App.css'
 
 function App() {
 
   return (
-    <AuthProvider>
+    <AuthProvider value={{
+      user: null,
+      isLoading: false
+    }}>
       <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/signup" element={<Signup />} />
-    </Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </AuthProvider>
   )
 }

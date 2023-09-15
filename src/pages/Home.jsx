@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 import UploadForm from "../components/UploadForm";
 import ImageGallery from "../components/ImageGallery";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../context/auth";
 
 const Home = () => {
     const {user} = useAuth();
