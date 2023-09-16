@@ -8,7 +8,6 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 
-
 export const AuthContext = createContext({
     user: null,
     isLoading: false,
@@ -23,7 +22,7 @@ export function useAuth() {
 export const AuthProvider = ({children}) => {
 
     const [user, setUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -47,7 +46,7 @@ export const AuthProvider = ({children}) => {
 
     return (
         <AuthContext.Provider value={value}>
-            {children}
+            {!isLoading && children}
         </AuthContext.Provider>
     )
 }
