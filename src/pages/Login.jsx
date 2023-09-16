@@ -1,22 +1,34 @@
-import React from "react";
+import { useState } from "react";
 import { useAuth } from "../context/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../context/auth";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
-  const { login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Login = () => {
+  // const { login } = useAuth();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState(
+    ''
+  );
+  const [error, setError] = useState('');
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+      e.preventDefault();
+
       try {
-          await login(email, password);
+          // await login(email, password);
           // Redirect or update UI after successful login
+          await createUserWithEmailAndPassword(auth, email, password);
+          navigate('/');
       } catch (error) {
-          // Handle login errors
+        setError(error.message)
       }
   };
 
   return (
-    <form>
+    <form onSubmit={handleLogin}>
+      {error && error}
         <div className="hero min-h-screen bg-base-200">
           <div className="hero-content flex-col">
             <div className="text-center">
@@ -51,7 +63,7 @@ function Login() {
                   </label> */}
                 </div>
            <div className="form-control mt-6">
-      <button className="btn btn-primary">Login</button>
+      <button className="btn btn-primary">Sign up</button>
     </div>
   </div>
 </div>
