@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../context/auth";
+import { auth } from "../firebase/config";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -13,6 +13,7 @@ const Login = () => {
   );
   const [error, setError] = useState('');
 
+  //to prevent default form submission
   const handleLogin = async (e) => {
       e.preventDefault();
 
