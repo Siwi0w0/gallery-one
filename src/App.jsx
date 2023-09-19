@@ -4,6 +4,7 @@ import Login from "./pages/Login"
 import './App.css'
 import { AuthProvider } from "./context/auth"
 import PublicRoute from './routes/PublicRoute'
+import PrivateRoute from "./routes/PrivateRoute"
 
 function App() {
 
@@ -13,7 +14,9 @@ function App() {
       isLoading: false
     }}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<PrivateRoute>
+          <Home />
+        </PrivateRoute>} />
         <Route path="/login" element={<PublicRoute>
           <Login />
         </PublicRoute>} />

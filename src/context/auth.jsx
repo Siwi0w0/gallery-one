@@ -1,12 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getAuth } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../firebase/config";
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-export const auth = getAuth(app);
+import { auth } from "../firebase/config";
 
 export const AuthContext = createContext({
     user: null,
