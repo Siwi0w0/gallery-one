@@ -3,7 +3,7 @@ import { useState } from 'react';
 import useStorage from '../hooks/useStorage';
 
 const  UploadForm = () => {
-    const[selectedFile, setSelectedFile] = useState(null);
+    const[selectedFile, setSelectedFile] = useState();
     const { startUpload } = useStorage();
 
     const handleFileChange = (e) => {
@@ -25,6 +25,7 @@ const  UploadForm = () => {
             <form onSubmit={handleSubmit}className="flex items-center flex-col gap-8">
                 <input
                  type="file" 
+                 name="file"
                  onChange={handleFileChange}
                  className="file-input file-input-bordered file-input-primary w-full max-w-xs" />
                 <button 
