@@ -10,47 +10,33 @@ const useStorage = () => {
 
     const startUpload = (file) => {
         //upload file to storage
-        if(!file) {return;}
+        if(!file) {
+          return;
+        };
 
         //create random id
         const fileId = uuidv4();
         const formatFile = file.type.split('/')[1];
-        console.log(formatFile);
-      
         const storageRef = ref(storage, `images/${fileId}.${formatFile}`);
-
-        uploadTask = uploadBytesResumable(storageRef, file);
+        const uploadTask = uploadBytesResumable(storageRef, file);
        
-
         uploadTask.on('state_changed', 
         (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-          setProgress(progress);
-          console.log('Upload is ' + progress + '% done');
-          switch (snapshot.state) {
-            case 'paused':
-              console.log('Upload is paused');
-              break;
-            case 'running':
-              console.log('Upload is running');
-              break;
-          }
-        }, 
-        (error) => {
+        }, (error) => {
           setError(error);
         }, () => {
-          // Handle successful uploads on complete
+    
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log('File available at', downloadURL);
+            setUrl(downloadURL);
+            setProgress(progress);
           });
-  }
-);
+  });
 };
 
     return(
-        progress, error, url, startUpload
+        progress, error, startUpload
     )
-}
+};
 
 export default useStorage;
