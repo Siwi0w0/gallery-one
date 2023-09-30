@@ -3,7 +3,11 @@ import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import { db } from '../firebase/config';
 
 export const useFirestore = (collectionName) => {
-    const [docs, setDocs] = useState();
+    let unsubscribe = () => {
+        console.log('unsubscribe');
+    };
+    
+    const [docs, setDocs] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -11,7 +15,11 @@ export const useFirestore = (collectionName) => {
             try {
                 const q = query(collection(db, collectionName), orderBy("createAt", "desc"));
                 const unsubscribe = onSnapshot(q, (querySnapshot) => {
-                const images = [];
+                const images = {
+                    imageURL: '',
+                    createAt: '',
+                    userEmail: '',
+                };
                 querySnapshot.forEach((doc) => {
                     const imageURL = doc.data().imageURL;
                     const createAt = doc.data().createAt.toDate();
@@ -30,6 +38,10 @@ export const useFirestore = (collectionName) => {
             
         }
         getData();
+
+        //what does this line mean
+        return () => unsubscribe && unsubscribe();
+        
     }, [collectionName])
 
     return { docs, isLoading };
