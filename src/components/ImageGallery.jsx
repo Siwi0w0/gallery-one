@@ -1,6 +1,9 @@
-import React from "react";
+import { useFirestore } from "../hooks/useFirestore";
 
 const ImageGallery = () => {
+    const { docs, isLoading } = useFirestore('images');
+    console.log(docs);
+
     return (
         <div className="grid md:grid-cols-3 justify-center gap-10">
             <div className="card card-compact w-96 bg-base-100 shadow-xl">
