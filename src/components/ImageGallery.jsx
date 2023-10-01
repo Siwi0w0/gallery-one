@@ -1,7 +1,7 @@
 import { useFirestore } from "../hooks/useFirestore";
 
 const ImageGallery = () => {
-    const { docs: images, isLoading } = useFirestore();
+    const { docs: images, isLoading } = useFirestore('images');
     
     if(isLoading){
         return (
@@ -16,13 +16,13 @@ const ImageGallery = () => {
             {images.map((image)=>{
                 return (
                     <div key={image.imageURL}
-                className="card card-compact w-96 bg-base-100 shadow-xl">
-                    <figure>
+                className="card card-compact w-full bg-base-100 shadow-xl">
+                    <figure className="max-h-[15rem]">
                         <img src={image.imageURL} alt=""/>
                     </figure>
                     <div className="card-body">
                         <p>Upload by: {image.userEmail}</p>
-                        <span>Create on: {image.createAt.toLocalDataString()}</span>
+                        <span>Create on: {image.createAt.toLocaleDateString()}</span>
                     </div>
                 </div>
                 )

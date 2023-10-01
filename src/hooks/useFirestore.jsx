@@ -7,19 +7,17 @@ export const useFirestore = (collectionName) => {
         console.log('unsubscribe');
     };
     
-    const [docs, setDocs] = useState(null);
+    const [docs, setDocs] = useState();
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+
+        let unsubscribe = async () => void 0;
         const getData = async () => {
             try {
                 const q = query(collection(db, collectionName), orderBy("createAt", "desc"));
-                const unsubscribe = onSnapshot(q, (querySnapshot) => {
-                const images = {
-                    imageURL: '',
-                    createAt: '',
-                    userEmail: '',
-                };
+                unsubscribe = onSnapshot(q, (querySnapshot) => {
+                const images = [];
                 querySnapshot.forEach((doc) => {
                     const imageURL = doc.data().imageURL;
                     const createAt = doc.data().createAt.toDate();
@@ -32,7 +30,7 @@ export const useFirestore = (collectionName) => {
                 });
 
             } catch(error){
-                console.log(error);
+                console.error(error);
                 setIsLoading(false);
             }
             
