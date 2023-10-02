@@ -7,4 +7,6 @@ export default defineConfig({
   build: {
     target: 'esnext', // Ensure ES modules are generated
     outDir: 'dist', // Specify the build output directory
+
+}
 })
